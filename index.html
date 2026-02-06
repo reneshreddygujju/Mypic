@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine 💖</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e8, #fff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background: #ff4d88;
+      color: white;
+    }
+
+    #noBtn {
+      background: #eee;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    img {
+      width: 200px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIRST SCREEN -->
+  <div class="card" id="questionScreen">
+    <h1>Pavani, will you be my Valentine? 💖</h1>
+    <p>Choose wisely 😏</p>
+    <div class="buttons">
+      <button id="yesBtn">YES</button>
+      <button id="noBtn">NO</button>
+    </div>
+    <p id="noMessage" style="color:red;"></p>
+  </div>
+
+  <!-- FINAL SCREEN -->
+  <div class="card hidden" id="finalScreen">
+    <h1>💖 YAY!!! 💖</h1>
+    <p>Best decision ever 😘</p>
+    <img src="https://raw.githubusercontent.com/reneshreddygujju/Mypic/main/img_1.jpg" alt="Cute couple">
+    <p>I love you ❤️</p>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const noMessage = document.getElementById("noMessage");
+    const questionScreen = document.getElementById("questionScreen");
+    const finalScreen = document.getElementById("finalScreen");
+
+    noBtn.addEventListener("click", () => {
+      noMessage.textContent = "Wrong choice 😜 Press YES";
+      noBtn.style.display = "none";
+    });
+
+    yesBtn.addEventListener("click", () => {
+      questionScreen.classList.add("hidden");
+      finalScreen.classList.remove("hidden");
+    });
+  </script>
+
+</body>
+</html>
