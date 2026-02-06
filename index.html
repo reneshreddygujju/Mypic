@@ -2,100 +2,271 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valentine 💖</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffd6e8, #fff);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e8 0%, #fff0f5 50%, #ffffff 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      overflow: hidden;
     }
 
     .card {
       background: white;
-      padding: 40px;
-      border-radius: 16px;
+      padding: 40px 30px;
+      border-radius: 20px;
       text-align: center;
       width: 320px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 90vw;
+      box-shadow: 0 12px 35px rgba(255, 77, 136, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+      animation: fadeInUp 0.6s ease-out;
+      position: relative;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     h1 {
+      font-size: 1.4em;
+      color: #e84393;
       margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .subtext {
+      font-size: 1em;
+      color: #888;
+      margin-bottom: 5px;
     }
 
     .buttons {
-      margin-top: 20px;
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     button {
-      padding: 10px 20px;
-      margin: 10px;
+      padding: 12px 28px;
       border: none;
-      border-radius: 8px;
+      border-radius: 25px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+
+    button:active {
+      transform: scale(0.95);
     }
 
     #yesBtn {
-      background: #ff4d88;
+      background: linear-gradient(135deg, #ff6b9d, #ff4d88);
       color: white;
+      box-shadow: 0 4px 15px rgba(255, 77, 136, 0.35);
+    }
+
+    #yesBtn:hover {
+      background: linear-gradient(135deg, #ff4d88, #e84393);
+      box-shadow: 0 6px 20px rgba(255, 77, 136, 0.5);
+      transform: translateY(-2px);
     }
 
     #noBtn {
-      background: #eee;
+      background: #f0f0f0;
+      color: #888;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    #noBtn:hover {
+      background: #e8e8e8;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    img {
+    #noMessage {
+      color: #e84393;
+      font-weight: 600;
+      margin-top: 18px;
+      font-size: 0.95em;
+      min-height: 1.4em;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .couple-img {
       width: 200px;
+      max-width: 80%;
       margin-top: 20px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .love-text {
+      font-size: 1.2em;
+      color: #e84393;
+      font-weight: 700;
+      margin-top: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .final-title {
+      font-size: 1.6em;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* Floating hearts background */
+    .hearts-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hearts-bg span {
+      position: absolute;
+      font-size: 1.4em;
+      animation: floatHeart linear infinite;
+      opacity: 0.15;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.15;
+      }
+      90% {
+        opacity: 0.15;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 400px) {
+      .card {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 1.2em;
+      }
+
+      button {
+        padding: 10px 22px;
+        font-size: 15px;
+      }
+
+      .couple-img {
+        width: 180px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Floating hearts background -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
   <!-- FIRST SCREEN -->
   <div class="card" id="questionScreen">
     <h1>Pavani, will you be my Valentine? 💖</h1>
-    <p>Choose wisely 😏</p>
+    <p class="subtext">Choose wisely 😏</p>
     <div class="buttons">
       <button id="yesBtn">YES</button>
       <button id="noBtn">NO</button>
     </div>
-    <p id="noMessage" style="color:red;"></p>
+    <p id="noMessage"></p>
   </div>
 
   <!-- FINAL SCREEN -->
   <div class="card hidden" id="finalScreen">
-    <h1>💖 YAY!!! 💖</h1>
-    <p>Best decision ever 😘</p>
-    <img src="./IMG_8612.heic" alt="Cute couple">
-    <p>I love you ❤️</p>
+    <h1 class="final-title">💖 YAY!!! 💖</h1>
+    <p class="subtext">Best decision ever 😘</p>
+    <img src="img_1.jpg" alt="Cute couple" class="couple-img">
+    <p class="love-text">I love you ❤️</p>
   </div>
 
   <script>
+    // DOM elements
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const noMessage = document.getElementById("noMessage");
     const questionScreen = document.getElementById("questionScreen");
     const finalScreen = document.getElementById("finalScreen");
 
-    noBtn.addEventListener("click", () => {
+    // NO button click handler
+    noBtn.addEventListener("click", function () {
       noMessage.textContent = "Wrong choice 😜 Press YES";
-      noBtn.style.display = "none";
+      noBtn.classList.add("hidden");
     });
 
-    yesBtn.addEventListener("click", () => {
+    // YES button click handler
+    yesBtn.addEventListener("click", function () {
       questionScreen.classList.add("hidden");
       finalScreen.classList.remove("hidden");
+      finalScreen.style.animation = "none";
+      // Trigger reflow to restart animation
+      void finalScreen.offsetWidth;
+      finalScreen.style.animation = "fadeInUp 0.6s ease-out";
     });
+
+    // Create floating hearts in the background
+    (function createFloatingHearts() {
+      var container = document.getElementById("heartsBg");
+      var hearts = ["💕", "💖", "💗", "💘", "❤️", "💝"];
+      for (var i = 0; i < 15; i++) {
+        var span = document.createElement("span");
+        span.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        span.style.left = Math.random() * 100 + "%";
+        span.style.animationDuration = (8 + Math.random() * 12) + "s";
+        span.style.animationDelay = (Math.random() * 10) + "s";
+        span.style.fontSize = (0.8 + Math.random() * 1.2) + "em";
+        container.appendChild(span);
+      }
+    })();
   </script>
 
 </body>
